@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Zimin Liu">
   <meta name="keywords" content="">
-  <title>Zimin&#39;s Blog</title>
+  <title>Archives ~ Zimin&#39;s Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 100vh;">
+  <header style="height: 80vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -120,10 +120,6 @@
           </div>
 
           
-            <div class="scroll-down-bar">
-              <i class="fas fa-angle-down scroll-down-arrow"></i>
-            </div>
-          
         </div>
       </div>
     </div>
@@ -139,272 +135,20 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-
-  <div class="row mx-auto index-card">
+<div class="list-group">
+  <p class="h4">3 posts in total.</p>
+  <hr>
+  
     
+      
+      <p class="h5">2018</p>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2020/03/03/Docker%E9%83%A8%E7%BD%B2Hadoop/">
-        <p class="h4 index-header">Docker 环境Hadoop 安装教程</p>
-      </a>
-
-      <a href="/2020/03/03/Docker%E9%83%A8%E7%BD%B2Hadoop/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">Docker 环境Hadoop 安装教程1.环境docker 拉取的最新Ubuntu镜像
-2. 更改镜像源
-复制原来的源信息
-$ cp /etc/apt/sources.list /etc/apt/sources.list.bak
-安装vim
-docker中的Ubuntu镜像默认没有vim 因此需要先安装vim,可使用以下命令，由于是从国外服务器下载，可能会有点慢。
-$ apt-get install vim
-修改源文件
-$ vim /etc/apt/sources.list将源文件中的内容换成
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe mu</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-03&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Docker">Docker</a>&nbsp;
-          
-            <a href="/tags/Hadoop">Hadoop</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2019/12/03/9102%E7%88%AC%E8%99%AB/">
-        <p class="h4 index-header">都9102年了，你还只会用python爬虫吗？</p>
-      </a>
-
-      <a href="/2019/12/03/9102%E7%88%AC%E8%99%AB/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">都9102年了，你还只会用python爬虫吗？前言无聊的时候，我们总会打开豆瓣电影榜，从上到下刷着电影，仿佛那些经典台词马上就在我们耳边响起，如《肖申克的救赎》中：生活可以归结为一种简单的选择：不是忙于生存，就是赶着去死；《霸王别姬》中：说的是一辈子！差一年，一个月，一天，一个时辰，都不算一辈子！但是，豆瓣电影那么多，还有那么多页，一页一页的找岂不是太费时间了，今天我就来从前端的角度来爬取豆瓣电影榜top250的首页。豆瓣top250  
-正文1. 获取豆瓣首页的html由于我们需要向豆瓣的服务器发送一个请求来得到豆瓣首页的html代码，请求与响应在网络传输中需要一定的时间，而后续的操作需要在这个响应的基础上进行，因此，我们需要将主函数定义为异步的。以上实现需要引入下面两个包(注意：request 是对等依赖，需要与request-promise 分开安装）  
-    npm i request
-    npm i request-promise  
-    let request = require(&#39;request-promise&#39;)
-    const main</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-03&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/JS">JS</a>&nbsp;
-          
-            <a href="/tags/Python">Python</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a href="/2018/03/03/Vim/">
-        <p class="h4 index-header">Vim</p>
-      </a>
-
-      <a href="/2018/03/03/Vim/">
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">vim1.vim的三种模式2.命令模式
-按 Esc进入命令模式
-
-3.插入模式进入插入模式的几种方法
-
-
-
-命令
-作用
-
-
-
-i
-在光标左侧插入
-
-
-I
-在光标所在行首插入
-
-
-a
-在光标右侧插入
-
-
-A
-在行尾插入
-
-
-o
-在光标所在行下方插入新的一行
-
-
-O
-在光标所在行的上方插入新的一行
-
-
-4.底线插入模式命令模式下输入:进入
-
-
-
-命令
-作用
-
-
-
-:wq
-保存并退出
-
-
-:w
-保存不退出
-
-
-:q
-退出编辑
-
-
-:q!
-强制退出,不保存文件,
-
-
-ZZ
-保存文件,退出编辑
-
-
-5.命令模式下各命令的具体作用5.1文本修改
-
-
-命令
-作用
-
-
-
-x
-删除光标位置字符
-
-
-dd
-删除所在行
-
-
-u
-撤销最近修改
-
-
-U
-撤销当前行上的所有修改
-
-
-r
-替换光标位置上的一个字符
-
-
-.
-重复上一次的修改
-
-
-5.2光标移动
-
-
-命令
-作用
-
-
-
-h
-光标左移
-
-
-j
-光标下移
-
-
-k
-光标上移
-
-
-l
-光标右移
-
-
-0(零)
-光标移动到当前行行首
-
-
-$
-光标移动到当前行行尾
-
-
-w
-光标右移一个字
-
-
-b
-光标左移一个字
-
-
-e
-光标移到字尾
-
-
-[Enter]
-光标移动到下一</div>
-        </div>
-      </a>
-
-      <div class="index-btm">
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-03&nbsp;&nbsp;
-        
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Vim">Vim</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-
-
+    <a href="/2018/03/03/Vim/" class="list-group-item list-group-item-action">
+      <span class="archive-post-title">Vim</span>
+      <span style="float: right;">03-03</span>
+    </a>
+  
+</div>
 
 
               </div>
@@ -530,7 +274,7 @@ e
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "&nbsp;",
+        "Archive&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
