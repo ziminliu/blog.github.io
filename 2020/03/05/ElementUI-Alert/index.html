@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Zimin Liu">
   <meta name="keywords" content="">
-  <title>Docker 环境Hadoop 安装教程|Zimin&#39;s Blog</title>
+  <title>ElementUI Alert|Zimin&#39;s Blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -121,7 +121,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  Tuesday, March 3rd 2020, 1:50 pm
+                  Thursday, March 5th 2020, 3:22 am
                 </p>
               
 
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1k 字
+                    1.6k 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      6 分钟
                   </span>&nbsp;
                 
 
@@ -171,129 +171,138 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="Docker-环境Hadoop-安装教程"><a href="#Docker-环境Hadoop-安装教程" class="headerlink" title="Docker 环境Hadoop 安装教程"></a>Docker 环境Hadoop 安装教程</h1><h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1.环境"></a>1.环境</h2><p>docker 拉取的最新Ubuntu镜像</p>
-<h2 id="2-更改镜像源"><a href="#2-更改镜像源" class="headerlink" title="2. 更改镜像源"></a>2. 更改镜像源</h2><ol>
-<li><p>复制原来的源信息</p>
-<pre><code>$ cp /etc/apt/sources.list /etc/apt/sources.list.bak</code></pre></li>
-<li><p>安装vim</p>
-<p>docker中的Ubuntu镜像默认没有vim 因此需要先安装vim,可使用以下命令，由于是从国外服务器下载，可能会有点慢。</p>
-<pre><code>$ apt-get install vim</code></pre></li>
-<li><p>修改源文件</p>
-<pre><code>$ vim /etc/apt/sources.list</code></pre><p>将源文件中的内容换成</p>
-<pre><code>deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-
-deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</code></pre></li>
-<li><p>更新软件列表</p>
-<pre><code>$ apt-get update</code></pre></li>
-<li><p>更新软件包</p>
-<pre><code>$apt-get upgrade</code></pre></li>
+            <h1 id="深入剖析ElementUI-Alert组件"><a href="#深入剖析ElementUI-Alert组件" class="headerlink" title="深入剖析ElementUI Alert组件"></a>深入剖析ElementUI Alert组件</h1><h2 id="邂逅Alert"><a href="#邂逅Alert" class="headerlink" title="邂逅Alert"></a>邂逅Alert</h2><p>ElementUI 作为国内比较火的一个VUe框架，主要原因是其中的数组件满足了日常开发的大部分需求，在写Vue项目的时候，经常会用Alert 组件与用户进行交互。作为一名在Vue学习之路上的后生小辈，源码分析可以提高我们项目开发的意识，今天我就来解剖一下ElementUI 中的Alert组件，在分析它的源码之前，让我们先看看它完整的功能有哪些？<a href="https://element.eleme.cn/#/zh-CN/component/alert" target="_blank" rel="noopener">ElementUI-Alert</a></p>
+<h2 id="熟悉Alert"><a href="#熟悉Alert" class="headerlink" title="熟悉Alert"></a>熟悉Alert</h2><p>看完Alert的参数，我们大概可以知道Alert 的一些功能，它可以设置主题，标题，类型，图标，居中效果，是否可关闭，关闭按钮自定义文本文本，关闭触发的事件。写下来我们就开始解剖Alert组件</p>
+<h2 id="Alert的结构分析"><a href="#Alert的结构分析" class="headerlink" title="Alert的结构分析"></a>Alert的结构分析</h2><ol>
+<li>transition 显示变换效果</li>
+<li>外层div盒子用于处理Alert整体的居中情况</li>
+<li>i标签用于显示Alert的图标样式</li>
+<li>内层div 展示Alert 的主体内容区域</li>
+<li>span 标签用于设置alert的标题</li>
+<li>两个p标签用于展示描述信息</li>
+<li>最后的i标签用于显示关闭按钮或关闭文本</li>
 </ol>
-<h2 id="3-安装SSH、配置SSH-无密码登录"><a href="#3-安装SSH、配置SSH-无密码登录" class="headerlink" title="3. 安装SSH、配置SSH 无密码登录"></a>3. 安装SSH、配置SSH 无密码登录</h2><p>由于我们已经更改的镜像源，所以我们可以很快的安装SSH的相关服务</p>
-<p>安装SSH client</p>
-<pre><code>$ apt-get install openssh-client</code></pre><p>安装SSH server</p>
-<pre><code>$ apt-get install openssh-server</code></pre><p>安装完成之后我们需要启动SSH服务</p>
-<pre><code>$ service ssh start</code></pre><p>可以用以下命令查看SSH 服务的状态</p>
-<pre><code>$ service ssh status</code></pre><p>如果正常启动，则会显示</p>
-<pre><code> * sshd is running</code></pre><p>我们使用<code>ssh localhost</code>登录时会每次都要输入密码，因此我们现在将SSH配置成无密码登录，输入以下命令</p>
-<pre><code>$ cd ~/.ssh/                     # 进入该目录，若没有则创建
-$ ssh-keygen -t rsa              # 输入后一直按回车就可以
-$ cat ./id_rsa.pub &gt;&gt; ./authorized_keys  # 将生成的秘钥加入授权
-</code></pre><p>之后我们就可以直接输入 <code>ssh localhost</code>登录了</p>
-<h2 id="4-安装Java环境"><a href="#4-安装Java环境" class="headerlink" title="4. 安装Java环境"></a>4. 安装Java环境</h2><ol>
-<li><p>下载jdk</p>
-<pre><code>$ apt-get install default-jre default-jdk</code></pre></li>
-<li><p>添加环境变量</p>
-<pre><code>$ vim ~/.bashrc</code></pre><p>将以下语句添加至文件第一行</p>
-<pre><code>export JAVA_HOME=/usr/lib/jvm/default-java</code></pre></li>
-<li><p>更新环境变量</p>
-<pre><code>$ source ~/.bashrc</code></pre></li>
-<li><p>检查是否生效</p>
-<pre><code>$ echo $JAVA_HOME     # 打印环境变量的值
-$ java -version          # 显示jdk 版本</code></pre></li>
-</ol>
-<h2 id="5-安装Hadoop-2"><a href="#5-安装Hadoop-2" class="headerlink" title="5. 安装Hadoop 2"></a>5. 安装Hadoop 2</h2><ol>
-<li><p>在宿主机中先下载好Hadoop的压缩包，我这里下载的是<code>hadoop-2.8.5.tar.gz</code>放在了 <code>H</code>盘的根目录下。</p>
-</li>
-<li><p>将宿主机中的安装包拷贝至容器中，我这里的容器名叫做Hadoop</p>
-<p>命令行启动，输入以下命令</p>
-<pre><code>&gt; docker cp H:/hadoop-2.8.5.tar.gz hadoop:/windows/</code></pre></li>
-<li><p>解压压缩包</p>
-<pre><code>$ tar -zxf /windows/hadoop-2.8.5.tar.gz -C /usr/local</code></pre></li>
-<li><p>进入安装目录</p>
-<pre><code>$ cd /usr/local/</code></pre></li>
-<li><p>修改文件名</p>
-<pre><code>$ mv ./hadoop-2.8.5 ./hadoop</code></pre></li>
-<li><p>执行文件查看版本信息</p>
-<p>先进入hadoop目录，然后执行下列语句</p>
-<pre><code>$ ./bin/hadoop version</code></pre><p>会出现以下信息则说明安装成功</p>
-<pre><code>Hadoop 2.8.5
-Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r 0b8464d75227fcee2c6e7f2410377b3d53d3d5f8
-Compiled by jdu on 2018-09-10T03:32Z
-Compiled with protoc 2.5.0
-From source with checksum 9942ca5c745417c14e318835f420733
-This command was run using /usr/local/hadoop/share/hadoop/common/hadoop-common-2.8.5.jar</code></pre></li>
-</ol>
-<h2 id="6-Hadoop-伪分布式配置"><a href="#6-Hadoop-伪分布式配置" class="headerlink" title="6. Hadoop 伪分布式配置"></a>6. Hadoop 伪分布式配置</h2><ol>
-<li><p>修改Hadoop的配置文件</p>
-<ol>
-<li><p>core-site.xml</p>
-<p>进入<code>/usr/local/hadoop/etc/hadoop/</code></p>
-<pre><code>$ cd /usr/local/hadoop/etc/hadoop
-$ vim core-site.xml</code></pre><p>将其中的</p>
-<pre><code>&lt;configuration&gt;
-&lt;/configuration&gt;</code></pre><p>修改为</p>
-<pre><code>&lt;configuration&gt;
-        &lt;property&gt;
-                &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;                                                       &lt;value&gt;file:/usr/local/hadoop/tmp&lt;/value&gt;
-                &lt;description&gt;Abase for other temporary directories.&lt;/description&gt;
-        &lt;/property&gt;                                                                       &lt;property&gt;
-                &lt;name&gt;fs.defaultFS&lt;/name&gt;
-                &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
-        &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><p>保存退出</p>
-</li>
-<li><p>hdfs-site.xml</p>
-<p>同样在<code>configuratio</code> 标签修改为</p>
-<pre><code>&lt;configuration&gt;
-        &lt;property&gt;
-                &lt;name&gt;dfs.replication&lt;/name&gt;
-                &lt;value&gt;1&lt;/value&gt;
-        &lt;/property&gt;
-        &lt;property&gt;
-                &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-                &lt;value&gt;file:/usr/local/hadoop/tmp/dfs/name&lt;/value&gt;
-        &lt;/property&gt;
-        &lt;property&gt;
-                &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-                &lt;value&gt;file:/usr/local/hadoop/tmp/dfs/data&lt;/value&gt;
-        &lt;/property&gt;
-&lt;/configuration&gt;</code></pre></li>
-</ol>
-</li>
-<li><p>执行<code>NAMENode</code>的格式化</p>
-<pre><code>$ cd /usr/local/hadoop
-$ ./bin/hdfs namenode -format</code></pre><p>成功会显示</p>
-<pre><code>Exitting with status 0”</code></pre></li>
-<li><p>开启<code>NameNode</code>和<code>DataNode</code>守护进程</p>
-<pre><code>$ cd /usr/local/hadoop
-$ ./sbin/start-dfs.sh</code></pre></li>
-</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="transition"><a href="#transition" class="headerlink" title="transition"></a>transition</h3><p>Vue提供了封装的transition组件，在进入/离开的过程中，会产生6个类，通过6个类的样式切换可以实现简单的动画效果。具体可查阅<a href="https://cn.vuejs.org/v2/guide/transitions.html" target="_blank" rel="noopener">官网</a></p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/06/transition.png" srcset="/img/loading.gif" alt="transition"></p>
+<p>我们找到 node_modules 里找到element-ui/lib/theme-chalk/alert.css，其中涉及到transition的样式有</p>
+<pre><code class="css">.el-alert-fade-enter,
+.el-alert-fade-leave-active {
+  opacity: 0
+}</code></pre>
+<p>只是简单的改变透明度，没有其他的样式改变。</p>
+<h3 id="div"><a href="#div" class="headerlink" title="div"></a>div</h3><p>对于一般组件来说，组件的整体布局效果，都由外层盒子决定，这里也不意外，盒子的样式，以及居中效果都由这个div 决定</p>
+<pre><code class="html">&lt;div
+      class=&quot;el-alert&quot;
+      :class=&quot;[typeClass, center ? &#39;is-center&#39; : &#39;&#39;, &#39;is-&#39; + effect]&quot;
+      v-show=&quot;visible&quot;
+      role=&quot;alert&quot;
+    &gt;</code></pre>
+<p>这里的class 设置了盒子的默认样式，并且将一个数组绑定给力class，以应用此数组中的多个样式。现在然我们看看对应的一些参数</p>
+<pre><code class="js">  props: {
+    type: {
+      type: String,
+      default: &quot;info&quot;
+    },
+    center: Boolean,
+    effect: {
+      type: String,
+      default: &quot;light&quot;,
+      validator: function(value) {
+        return [&quot;light&quot;, &quot;dark&quot;].indexOf(value) !== -1;
+      }
+    }
+  },
+  data() {
+      return {
+        visible: true
+      };
+    },
+  computed: {
+    typeClass() {
+      return `el-alert--${this.type}`;
+    }
+  }</code></pre>
+<p>通过参数type 的值(success/warning/info/error)，使用typeClass 计算属性计算出相应的类名，应用对应的样式。以及center,effect 属性，effect参数增加了validator 方法验证参数值，对于值的要求更为严格，若不在数组当中，不仅不会应用样式，还会报错。可以看到，到Alert 被调用是，visible的初始值就被赋予了true，对于role属性，在我们的日常开发中用的很少，role的作用是供有障碍的人士使用的，从这里可以好的好的框架应用的群体更加广泛。</p>
+<h3 id="i-图标"><a href="#i-图标" class="headerlink" title="i    图标"></a>i    图标</h3><p>i 标签的原作用本是改变文本样式，使文本斜体，但是由于在应用中非常少见，而图标的大量出现，使得i标签被icon 化。</p>
+<pre><code class="html">&lt;i class=&quot;el-alert__icon&quot; :class=&quot;[ iconClass, isBigIcon ]&quot; v-if=&quot;showIcon&quot;&gt;&lt;/i&gt;</code></pre>
+<pre><code class="js">  props: {
+    showIcon: Boolean
+  },
+  computed: {
+    iconClass() {
+      return TYPE_CLASSES_MAP[this.type] || &quot;el-icon-info&quot;;
+    },
+
+    isBigIcon() {
+      return this.description || this.$slots.default ? &quot;is-big&quot; : &quot;&quot;;
+    }
+  }</code></pre>
+<pre><code class="js">&lt;script&gt;
+const TYPE_CLASSES_MAP = {
+    &#39;success&#39;: &#39;el-icon-success&#39;,
+    &#39;warning&#39;: &#39;el-icon-warning&#39;,
+    &#39;error&#39;: &#39;el-icon-error&#39;
+  };
+export default{
+    ...
+}
+&lt;/script&gt;</code></pre>
+<p>此处根据show-icon  的属性值，来判断是否需要渲染图标，当条件为真时，根据type属性的值计算得到相应类型的图标。计算图标方法中使用了逻辑或运算符，即从左往右运算开始，当出现第一个属性真值为true,则返回当前值，不再进行后续的逻辑运算。此种方法，将 <code>el-icon-info</code>作为了默认图标。我们可以发现，只要我们开启了图标，即将show-icon 置为true，不论我们type 输入什么，图标等还是会出现，只是由于type的错误类型导致某些样式没有启用，而出现的视觉差异。isBigIcon 方法根据description的属性值或者插槽中的文本进行计算，当二者至少有一个为真时则渲染大图标。</p>
+<h3 id="div-1"><a href="#div-1" class="headerlink" title="div"></a>div</h3><pre><code class="css">.el-alert__content {
+  display: table-cell;
+  padding: 0 8px
+}</code></pre>
+<h3 id="span-标题"><a href="#span-标题" class="headerlink" title="span    标题"></a>span    标题</h3><p>此处渲染alert 框title的文本</p>
+<pre><code class="html">&lt;span class=&quot;el-alert__title&quot; :class=&quot;[ isBoldTitle ]&quot; v-if=&quot;title || $slots.title&quot;&gt;
+          &lt;slot name=&quot;title&quot;&gt;{{ title }}&lt;/slot&gt;
+&lt;/span&gt;</code></pre>
+<pre><code class="js">  props: {
+    title: {
+      type: String,
+      default: &quot;&quot;
+    }
+  },
+  computed: {
+         isBoldTitle() {
+        return this.description || this.$slots.default ? &#39;is-bold&#39; : &#39;&#39;;
+      }
+  }</code></pre>
+<pre><code class="css">.el-alert__title {
+  font-size  : 13px;
+  line-height: 18px
+}
+
+.el-alert__title.is-bold {
+  font-weight: 700
+}</code></pre>
+<p>此处通过使用了$slots API ，来得到插槽中的值，从而确定title是否显示，当描述信息存在时，则标题为粗体。</p>
+<h3 id="p-描述信息"><a href="#p-描述信息" class="headerlink" title="p    描述信息"></a>p    描述信息</h3><pre><code class="html">&lt;p class=&quot;el-alert__description&quot; v-if=&quot;$slots.default &amp;&amp; !description&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/p&gt;
+&lt;p class=&quot;el-alert__description&quot; v-if=&quot;description &amp;&amp; !$slots.default&quot;&gt;{{ description }}&lt;/p&gt;</code></pre>
+<p>此处放置两个p 标签来渲染描述信息，第一个为当描述信息以插槽的形式出现时渲染，第二个为当描述信息以属性的方式在组件内部出现时渲染，因此，当组件内部和插槽中都出现了描述信息时，都不渲染描述信息。</p>
+<h3 id="i-关闭按钮-文本"><a href="#i-关闭按钮-文本" class="headerlink" title="i    关闭按钮/文本"></a>i    关闭按钮/文本</h3><pre><code class="html">&lt;i class=&quot;el-alert__closebtn&quot; :class=&quot;{ &#39;is-customed&#39;: closeText !== &#39;&#39;, &#39;el-icon-close&#39;: closeText === &#39;&#39; }&quot; v-show=&quot;closable&quot; @click=&quot;close()&quot;&gt;{{closeText}}&lt;/i&gt;</code></pre>
+<pre><code class="js">  props: {
+    closable: {
+      type: Boolean,
+      default: true
+    },
+    closeText: {
+      type: String,
+      default: &quot;&quot;
+    }
+  },
+  methods: {
+    close() {
+      this.visible = false;
+      this.$emit(&quot;close&quot;);
+    }
+  }</code></pre>
+<p>这里使用对象语法绑定class ,根据对象内属性的true or false 应用不同的css ，同时绑定了一个close的事件。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>作为一名刚上路的新手，第一眼看上去，感觉源码非常的复杂，但是，当仔细看进去了之后，发现其实也不难理解，通过源码的分析，我们不仅能够加深对Vue的理解，还能够帮助我们优化代码结构，培养业务能力。</p>
+<blockquote>
+<p>萌新上路，请多多指教</p>
+<p>如有错误，欢迎指出</p>
+</blockquote>
+<p>饿了吗？有一说一，确实饿了。</p>
 
             <hr>
           </div>
@@ -305,9 +314,9 @@ $ ./sbin/start-dfs.sh</code></pre></li>
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/Docker">Docker</a>
+                  <a class="hover-with-bg" href="/tags/Vue">Vue</a>
                 
-                  <a class="hover-with-bg" href="/tags/Hadoop">Hadoop</a>
+                  <a class="hover-with-bg" href="/tags/ElementUI">ElementUI</a>
                 
               </span>
             
@@ -344,8 +353,8 @@ $ ./sbin/start-dfs.sh</code></pre></li>
     <div id="disqus_thread"></div>
     <script>
       var disqus_config = function () {
-        this.page.url = 'http://zimin.fun/2020/03/03/Docker部署Hadoop/';
-        this.page.identifier = '/2020/03/03/Docker部署Hadoop/';
+        this.page.url = 'http://zimin.fun/2020/03/05/ElementUI-Alert/';
+        this.page.identifier = '/2020/03/05/ElementUI-Alert/';
       };
       var oldLoad = window.onload;
       window.onload = function () {
@@ -488,7 +497,7 @@ $ ./sbin/start-dfs.sh</code></pre></li>
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Docker 环境Hadoop 安装教程&nbsp;",
+        "ElementUI Alert&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
