@@ -60,7 +60,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/">首页</a>
           </li>
         
           
@@ -68,7 +68,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">Archives</a>
+            <a class="nav-link" href="/archives/">归档</a>
           </li>
         
           
@@ -76,7 +76,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">Categories</a>
+            <a class="nav-link" href="/categories/">分类</a>
           </li>
         
           
@@ -84,7 +84,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">Tags</a>
+            <a class="nav-link" href="/tags/">标签</a>
           </li>
         
           
@@ -92,7 +92,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">About</a>
+            <a class="nav-link" href="/about/">关于</a>
           </li>
         
         
@@ -130,7 +130,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1k 字
+                    1.5k 字
                   </span>&nbsp;
                 
 
@@ -138,7 +138,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      6 分钟
                   </span>&nbsp;
                 
 
@@ -292,7 +292,47 @@ $ ./bin/hdfs namenode -format</code></pre><p>成功会显示</p>
 <pre><code>Exitting with status 0”</code></pre></li>
 <li><p>开启<code>NameNode</code>和<code>DataNode</code>守护进程</p>
 <pre><code>$ cd /usr/local/hadoop
-$ ./sbin/start-dfs.sh</code></pre></li>
+$ ./sbin/start-dfs.sh</code></pre><p>若出现如下SSH提示，输入yes即可。</p>
+</li>
+<li><p>使用 <code>jps</code> 命令查看Hadoop 进程的状态</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# jps
+803 NameNode
+1141 SecondaryNameNode
+951 DataNode
+1278 Jps</code></pre>
+</li>
+</ol>
+<p>成功启动后，可以访问 Web 界面 <a href="http://localhost:50070/" target="_blank" rel="noopener">http://localhost:50070</a> 查看 NameNode 和 Datanode 信息，还可以在线查看 HDFS 中的文件,但由于是在docker 中运行的Hadoop 并没有向主机暴露端口，因此，在主机中是无法访问该URL的。</p>
+<h2 id="7-运行Hadoop-伪分布式实例"><a href="#7-运行Hadoop-伪分布式实例" class="headerlink" title="7.运行Hadoop 伪分布式实例"></a>7.运行Hadoop 伪分布式实例</h2><p>上面的单机模式，grep 例子读取的是本地数据，伪分布式读取的则是 HDFS 上的数据。要使用 HDFS，首先需要在 HDFS 中创建用户目录：</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hdfs dfs -mkdir -p /user/hadoop</code></pre>
+<blockquote>
+<p>hadoop fs适用于任何不同的文件系统，比如本地文件系统和HDFS文件系统</p>
+<p>hadoop dfs只能适用于HDFS文件系统</p>
+<p>hdfs dfs跟hadoop dfs的命令作用一样，也只能适用于HDFS文件系统</p>
+</blockquote>
+<ol>
+<li><p>在Hadoop 用户目录下创建input 目录</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hadoop fs -mkdir /user/hadoop/input</code></pre>
+</li>
+<li><p>将 /usr/local/hadoop/etc/hadoop 复制到分布式文件系统中的 /user/hadoop/input 中</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hadoop fs -put ./etc/hadoop/*.xml /user/hadoop/input</code></pre>
+</li>
+<li><p>查看文件列表</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hadoop fs -ls /user/hadoop/input</code></pre>
+</li>
+<li><p>伪分布式运行 MapReduce 作业的方式跟单机模式相同，区别在于伪分布式读取的是HDFS中的文件（可以将单机步骤中创建的本地 input 文件夹，输出结果 output 文件夹都删掉来验证这一点）。</p>
+<pre><code class="shell">./bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar grep /user/hadoop/input /user/hadoop/output &#39;dfs[a-z.]+&#39;</code></pre>
+</li>
+<li><p>查看Hadoop 伪分布式运行结果</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hdfs dfs -cat /user/hadoop/output/*</code></pre>
+<p><img src="C:%5CUsers%5C%E5%88%98%E5%AD%90%E6%B0%91%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1583491059673.png" srcset="/img/loading.gif" alt="1583491059673"></p>
+</li>
+<li><p>将 HDFS 上的 output 文件夹拷贝到本机当前目录下</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# ./bin/hdfs dfs -get /user/hadoop/output ./output</code></pre>
+</li>
+<li><p>查看文件</p>
+<pre><code class="shell">root@3ec288c34e42:/usr/local/hadoop# cat ./output/*</code></pre>
+</li>
 </ol>
 
             <hr>
@@ -322,7 +362,7 @@ $ ./sbin/start-dfs.sh</code></pre></li>
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
     <div id="tocbot"></div>
   </div>
 
@@ -380,7 +420,7 @@ $ ./sbin/start-dfs.sh</code></pre></li>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -389,7 +429,7 @@ $ ./sbin/start-dfs.sh</code></pre></li>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+                 for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -423,6 +463,11 @@ $ ./sbin/start-dfs.sh</code></pre></li>
 
 
     
+  <!-- 备案信息 -->
+  <a href="http://beian.miit.gov.cn/" target="_blank"
+     rel="nofollow noopener">赣ICP备20003375号</a>
+  
+
 
 
     <!-- cnzz Analytics icon -->
@@ -547,6 +592,57 @@ $ ./sbin/start-dfs.sh</code></pre></li>
 
 
 
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
 
 
 
